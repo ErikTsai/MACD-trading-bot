@@ -23,11 +23,9 @@ ALPACA_CONFIG = {
 
 class MACDStrategy(Strategy):
     def initialize(self):
-        self.symbol = "SPY"
+        self.symbol = "GLD"
         self.signal = None
         self.sleeptime = "1D"
-        self.entry_price = None
-        self.stop_loss_price = None 
     
     def on_trading_iteration(self):   
         # MACD SIGNAL LOGIC DONE
@@ -53,23 +51,14 @@ class MACDStrategy(Strategy):
 
         if self.signal == 'BUY':
             if position is None:
-                self.entry_price = current_price
-                self.stop_loss_price = self.entry_price - 0.02 * self.entry_price # 2% risk
-                
-                cash = self.get_cash() * 0.02  # Risking 2% of available cash
-                quantity = cash / self.entry_price
+                cash = self.get_cash() * 1  
+                quantity = cash / current_price
                 order = self.create_order(self.symbol, quantity, "buy")
                 self.submit_order(order)
 
         elif self.signal == 'SELL' and position is not None:
             self.sell_all()
-        
-        # Manage stop-loss
-        if position is not None:
-            if current_price <= self.stop_loss_price:
-                self.sell_all()
-                
-            
+                          
 if __name__ == "__main__":
     trade = False
     if trade:
@@ -81,7 +70,7 @@ if __name__ == "__main__":
         trader.run_all()
     else:
         # Create a backtest
-        backtesting_start = datetime(2018, 4, 15)
+        backtesting_start = datetime(2015, 4, 15)
         backtesting_end = datetime(2023, 4, 15)
 
         MACDStrategy.backtest(
