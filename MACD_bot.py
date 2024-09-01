@@ -23,7 +23,7 @@ ALPACA_CONFIG = {
 
 class MACDStrategy(Strategy):
     def initialize(self):
-        self.symbol = "GLD"
+        self.symbol = "AAPL"
         self.signal = None
         self.sleeptime = "1D"
     
