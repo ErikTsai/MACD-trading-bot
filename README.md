@@ -101,9 +101,9 @@ Here are some of the backtesting results from the trading bot (Trading from Apri
 
 ## Thoughts
 
-The MACD strategy used by the bot performs well when trading stocks that have clear trends. Stocks in strong uptrends or downtrends, such as SPY and AAPL, yielded high annual returns. Conversely, GLD, which experienced relatively sideways movement from 2018 to 2023, resulted in lower annual returns.
+The MACD strategy used by the bot performs well when trading stocks that have clear trends. Stocks in strong uptrends or downtrends, such as SPY and AAPL, tend to yield high annual returns. Conversely, GLD, which experienced relatively sideways movement from 2018 to 2023, resulted in lower annual returns.
 
-While WBA has been in a consistent downtrend, the backtesting results showed a negative return. This outcome stems from the current bot's handling of bearish signals—where it sells all positions instead of properly shorting the stock. I plan on implementing this functionality in the future, and using the lessons I've learned from this project to build a more effectiving trading bot.
+While WBA has been in a consistent downtrend—a good sign for the MACD strategy, the backtesting resulted in a negative return. This outcome stems from the current bot's handling of bearish signals—where it sells all positions instead of properly shorting the stock. I plan on implementing this functionality in the future, and using the lessons I've learned from this project to build a more effective trading bot.
 
 
 
