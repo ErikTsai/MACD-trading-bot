@@ -1,111 +1,111 @@
+
+# Disclaimer
+**This trading bot was developed for research purposes only. It is not intended to be used as a tool for trading or making financial decisions**
+
 # MACD Strategy Trading Bot
 
-This project is a trading bot built using the [Lumibot](https://lumibot.com/) framework and the Alpaca trading API. The bot implements a trading strategy based on the Moving Average Convergence Divergence (MACD) indicator, combined with a 200-day Exponential Moving Average (EMA) filter, to generate buy and sell signals for the AAPL stock.
+This trading bot was built using the [Lumibot](https://lumibot.lumiwealth.com/) framework and the Alpaca API. The bot uses a trading strategy based on the Moving Average Convergence Divergence (MACD) indicator to generate and execute buy and sell signals for different stocks.
 
 ## Features
 
--   **MACD-Based Strategy**: The bot uses the MACD indicator to identify potential buy and sell opportunities.
--   **Trend Confirmation**: It incorporates a 200-day EMA to confirm the trend before making trades.
--   **Automated Trading**: Trades are automatically executed using Alpaca as the broker.
+-   **MACD-Based Strategy**: The bot uses the MACD indicator along with other methods to identify buy and sell opportunities.
+-   **Automated Trading**: Trades can be automatically executed using Alpaca as the broker.
 -   **Backtesting**: The bot can be backtested on historical data using Yahoo Finance data.
--   **Environment Configuration**: API keys and other configurations are managed through environment variables.
 
 ## Requirements
 
 -   Python 3.8 or higher
--   Lumibot
+-   Pip
 -   Alpaca API Account (with API key and secret)
--   Pandas
--   NumPy
--   Dotenv
 
 ## Setup
 
 1.  **Clone the repository**:
     
-    bash
+```sh
+git clone https://github.com/ErikTsai/MACD-trading-bot.git` 
+```
+
+2.  **Install the required Python packages in your project's virtual environment**:
     
-    Copy code
     
-    `git clone https://github.com/yourusername/macd-strategy-bot.git
-    cd macd-strategy-bot` 
+```sh
+pip install lumibot pandas numpy python-dotenv
+```
+3.  **Create a free [Alpaca](https://alpaca.markets/) account and get your API keys**
     
-2.  **Install the required Python packages**:
-    
-    bash
-    
-    Copy code
-    
-    `pip install lumibot pandas numpy python-dotenv` 
-    
-3.  **Set up your environment variables**:
+4.  **Set up your environment variables**:
     
     Create a `.env` file in the root directory and add your Alpaca API credentials:
+```sh
+API_KEY = your_alpaca_api_key
+API_SECRET = your_alpaca_secret_key
+```
     
-    plaintext
-    
-    Copy code
-    
-    `API_KEY=your_alpaca_api_key
-    API_SECRET=your_alpaca_api_secret` 
-    
-4.  **Configure Alpaca**:
-    
-    The `ALPACA_CONFIG` dictionary in the script uses your API key and secret to set up the connection to Alpaca. Make sure your keys are correct and that your account is set to paper trading (`PAPER: True`).
+
     
 
 ## Usage
 
+### Choosing a Symbol to Trade
+To choose which stock to trade, set the `self.symbol` variable to a symbol of your choice.
+```sh
+self.symbol = "SYMBOL" #AAPL OR SPY AS AN EXAMPlE
+```
+
 ### Running the Bot in Live Trading Mode
 
-To run the bot in live trading mode, set the `trade` variable in the `__main__` block to `True`:
-
-python
-
-Copy code
-
-`if __name__ == "__main__":
+To run the bot in live trading mode, set the `trade` variable in the `__main__` block at the end of the code to `True`.
+```sh
+if __name__ == "__main__":
     trade = True
-    if trade:
-        # run strategy through Alpaca
-        alpaca = Alpaca(ALPACA_CONFIG)
-        strategy = MACDStrategy(broker=alpaca)
-        trader = Trader()
-        trader.add_strategy(strategy)
-        trader.run_all()` 
-
+```
 ### Backtesting the Strategy
 
 To backtest the strategy, set the `trade` variable to `False` and specify the backtesting period:
 
-python
-
-Copy code
-
-`if __name__ == "__main__":
+```sh
+if __name__ == "__main__":
     trade = False
-    if trade:
-        alpaca = Alpaca(ALPACA_CONFIG)
-        strategy = MACDStrategy(broker=alpaca)
-        trader = Trader()
-        trader.add_strategy(strategy)
-        trader.run_all()
-    else:
-        # Create a backtest
-        backtesting_start = datetime(2015, 4, 15)
-        backtesting_end = datetime(2023, 4, 15)
-
-        MACDStrategy.backtest(
-            YahooDataBacktesting,
-            backtesting_start,
-            backtesting_end,
-        )` 
+```
+```sh
+backtesting_start  =  datetime(2015, 4, 15) #(year, month, day)
+backtesting_end  =  datetime(2023, 4, 15)
+```
+ 
 
 ### Strategy Details
 
 -   **MACD**: The MACD is calculated using a 12-day EMA, a 26-day EMA, and a 9-day signal line.
--   **200-day EMA**: The strategy uses a 200-day EMA to determine the overall market trend. Only buy signals are considered when the price is above the 200-day EMA, and sell signals are considered when the price is below.
+-   **200-day EMA**: The strategy uses a 200-day EMA to determine the overall market trend. Buy and sell signals are only generated when the market is in an uptrend and downtrend respectively. 
 -   **Position Management**: The bot will buy the stock if no position is currently held when a buy signal is triggered. It will sell the entire position when a sell signal is triggered.
+
+
+## Results
+Here are some of the backtesting results from the trading bot (Trading from April 15, 2015 to April 15, 2023)
+
+**Trading SPY:**
+![SPY Results](backtesting-results/SPY.png)
+
+
+**Trading AAPL:**
+![AAPL Results](backtesting-results/AAPL.png)
+
+
+**Trading GLD:**
+![GLD Results](backtesting-results/GLD.png)
+
+
+**Trading WBA:**
+![WBA Results](backtesting-results/WBA.png)
+
+## Thoughts
+
+The MACD strategy used by the bot performs well when trading stocks that have clear trends. Stocks in strong uptrends or downtrends, such as SPY and AAPL, yielded high annual returns. Conversely, GLD, which experienced relatively sideways movement from 2018 to 2023, resulted in lower annual returns.
+
+While WBA has been in a consistent downtrend, the backtesting results showed a negative return. This outcome stems from the current bot's handling of bearish signals—where it sells all positions instead of properly shorting the stock. I plan on implementing this functionality in the future, and using the lessons I've learned from this project to build a more effectiving trading bot.
+
+
 
 ## Contributing
 
