@@ -30,7 +30,7 @@ git clone https://github.com/ErikTsai/MACD-trading-bot.git`
     
     
 ```sh
-pip install lumibot pandas numpy python-dotenv
+pip install requirements.txt
 ```
 3.  **Create a free [Alpaca](https://alpaca.markets/) account and get your API keys**
     
